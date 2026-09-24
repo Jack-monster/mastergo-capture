@@ -1,0 +1,27 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Virtual environments
+.venv/
+
+# System files
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+.browser-profile/
+output/
+.private/
+
+# Portable authentication credentials
+.auth/

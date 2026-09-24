@@ -1,0 +1,44 @@
+[project]
+name = "mastergo-capture"
+version = "0.1.0"
+description = "MasterGo 浏览器设计数据采集与 Agent 资料包"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "jsonschema>=4.26.0",
+    "playwright>=1.63.0",
+    "tinycss2>=1.5.1",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.10",
+    "pytest>=8.0",
+    "ruff>=0.5",
+    "types-jsonschema>=4.26.0.20260518",
+    "types-tinycss2>=1.5.1.20260414",
+]
+
+[tool.ruff]
+extend-exclude = [".private", "output", ".browser-profile"]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+files = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+pythonpath = ["src"]
