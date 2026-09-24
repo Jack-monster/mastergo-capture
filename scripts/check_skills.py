@@ -44,6 +44,11 @@ def main() -> None:
             assert not set(path.relative_to(skill).parts) & FORBIDDEN, path
             if not path.is_file() or path.name == '.DS_Store':
                 continue
+            # User-provided README illustration; never included in runtime/share templates.
+            if path.relative_to(skill).as_posix() == 'docs/images/h5-player-example.png':
+                assert path.stat().st_size < 3_000_000, 'Documentation screenshot too large'
+                assert path.read_bytes().startswith(b'\x89PNG\r\n\x1a\n'), 'Invalid PNG header'
+                continue
             assert path.stat().st_size < 1_000_000, f'Unexpected large file: {path}'
             if path.suffix == '.py':
                 ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
@@ -71,6 +76,7 @@ def main() -> None:
                 assert z.testzip() is None
                 assert all(not (set(Path(n).parts) & FORBIDDEN) for n in z.namelist())
                 assert 'mastergo-capture/templates/tool/.template-only' in z.namelist()
+                assert not any('/docs/images/' in name for name in z.namelist())
         assert before == snapshot(skill), 'Bootstrap changed the skill template'
     print(f'OK: {len(skills)} skill(s); syntax, clean template, bootstrap and share package verified')
 
